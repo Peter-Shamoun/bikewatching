@@ -9,6 +9,19 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
   <script src="map.js" type="module"></script>
+  <style>
+    .loading-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 999;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,6 +34,10 @@
     </label>
   </header>
   <div id="map">
+    <div class="loading-message">
+      <h3>Loading map data...</h3>
+      <p>If the map doesn't appear, please check the browser console for errors.</p>
+    </div>
     <svg></svg>
   </div>
   <div class="legend">
@@ -28,5 +45,19 @@
     <div style="--departure-ratio: 0.5">Balanced</div>
     <div style="--departure-ratio: 0">More arrivals</div>
   </div>
+
+  <script>
+    // Remove loading message when map is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loadingMessage = document.querySelector('.loading-message');
+          if (loadingMessage) {
+            loadingMessage.style.display = 'none';
+          }
+        }, 5000); // Hide after 5 seconds regardless
+      });
+    });
+  </script>
 </body>
 </html>
